@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: booking_api
+
+server:
+  port: 8763
+
+movieadmin-config:
+  movieAdminUrl: http://ADMIN_API

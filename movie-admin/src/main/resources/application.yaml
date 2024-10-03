@@ -1,0 +1,12 @@
+logging:
+  level:
+    root: error
+    org.springframework: WARN
+    com.jfsd: DEBUG
+
+spring:
+  application: 
+    name: admin_api
+
+server:
+  port: 8762

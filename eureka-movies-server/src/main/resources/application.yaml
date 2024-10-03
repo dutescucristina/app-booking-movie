@@ -1,0 +1,28 @@
+logging:
+  level:
+    root: error
+    org.springframework: WARN
+    com.eurekalocal: INFO
+spring:
+  application:
+    name: eureka_server
+  freemarker:
+    template-loader-path: classpath:/templates/
+    prefer-file-sistem-access: false
+
+server:
+  port: 8761
+  
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 30
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  server:
+    enable-self-preservation: false

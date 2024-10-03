@@ -1,0 +1,62 @@
+services:
+  eureka_server:
+    container_name: "eureka_server"
+    build:
+      context: D:\\Work\\app-booking-movie
+      dockerfile: eureka-movies-server/Docker/Dockerfile
+    restart: always
+    ports:
+      - 8761:8761
+    networks:
+      default:
+        ipv4_address: 172.18.0.2
+  admin_api:
+    container_name: "admin_api"
+    build:
+      context: D:\\Work\\app-booking-movie
+      dockerfile: movie-admin/Docker/Dockerfile
+    restart: always
+    ports:
+      - 8762:8762
+    depends_on:
+      - eureka_server
+      - mysql_db
+    networks:
+        default:
+          ipv4_address: 172.18.0.4
+  booking_api:
+    container_name: "booking_api"
+    build:
+      context: D:\\Work\\app-booking-movie
+      dockerfile: movie-booking/Docker/Dockerfile
+    restart: always
+    ports:
+      - 8763:8763
+    depends_on:
+      - eureka_server
+      - mysql_db
+      - admin_api
+    networks:
+      default:
+        ipv4_address: 172.18.0.5
+  mysql_db:
+    container_name: "mysql_db"
+    image: "mysql:8.3"
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      default:
+        ipv4_address: 172.18.0.3
+    environment:
+      MYSQL_DATABASE: moviebooking
+      MYSQL_USER: cristina
+      MYSQL_PASSWORD: cristina
+      MYSQL_ROOT_PASSWORD: admin
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
+    driver: bridge
